@@ -83,8 +83,8 @@ for (let key in user) {
 }
 ```
 
-* Ff we loop over an object, do we get all properties in the same order they were added?
-* The short answer is: may not, because they are “ordered in a special fashion”: integer properties are sorted, others
+* If we loop over an object, do we get all properties in the same order they were added?
+* The short answer is: "may not", because they are “ordered in a special fashion”: integer properties are sorted, others
   appear in creation order. The details follow. The phone codes go in the ascending sorted order, because they are
   integers. So we see 1, 41, 44, 49. The “integer property” term here means a string that can be converted to-and-from
   an integer without a change.
