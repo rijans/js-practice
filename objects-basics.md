@@ -89,7 +89,8 @@ for (let key in user) {
   integers. So we see 1, 41, 44, 49. The “integer property” term here means a string that can be converted to-and-from
   an integer without a change.
 
-```let codes = {
+```javascript
+let codes = {
 "49": "Germany",
 "41": "Switzerland",
 "44": "Great Britain",
@@ -99,7 +100,8 @@ for (let key in user) {
 
 for (let code in codes) {
 alert(code); // 1, 41, 44, 49
-}```
+}
+```
 
 
 
