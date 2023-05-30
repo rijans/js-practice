@@ -73,7 +73,7 @@ base=36 is the maximum, digits can be 0..9 or A..Z. It is mainly used for shorte
 Two dots to call a method
 
 ```javascript
-alert(123456..toString(36)); // 2n9c
+alert(123456..toString(36)); // 2n9c (Opposite is parseInt(str, radix))
 ```
 
 Because JS reads the first dot as a decimal point, not a part of a number. So the second dot is treated as a property.
@@ -95,24 +95,82 @@ Multiply, round, divide:
 
 **Imprecise calculations**
 
-Numbers are internally represented in 64-bit format IEEE-754. 52 bits for digits, 11 for decimal point position, 1 for sign.
+Numbers are internally represented in 64-bit format IEEE-754. 52 bits for digits, 11 for decimal point position, 1 for
+sign.
 
 Large numbers may overflow to Infinity, e.g., alert(1e500); // Infinity.
-Precision loss happens due to binary representation of fractions, e.g., alert(0.1+0.2==0.3); // false, alert(0.1+0.2); // 0.30000000000000004.
+"Precision loss" happens due to binary representation of fractions, e.g., alert(0.1+0.2==0.3); // false, alert(
+0.1+0.2); // 0.30000000000000004.
 
-Fractions like 0.1, 0.2 are unending in binary. No way to store exactly 0.1 or 0.2 in binary, similar to storing 1/3 in decimal.
+Fractions like 0.1, 0.2 are unending in binary. No way to store exactly 0.1 or 0.2 in binary, similar to storing 1/3 in
+decimal.
 
-IEEE-754 rounds to nearest number, causing precision loss, e.g., alert(0.1.toFixed(20)); // 0.10000000000000000555.
+IEEE-754 rounds to nearest number, causing "precision loss", e.g., alert(0.1.toFixed(20)); // 0.10000000000000000555.
 
 Issue exists in many languages like PHP, Java, C, Perl, Ruby as they use same numeric format.
 
 To work around, round result using toFixed(n), e.g., let sum = 0.1 + 0.2; alert( +sum.toFixed(2) ); // 0.3.
 
-Can also multiply numbers to make them integers, do math, then divide back. Reduces but doesn't remove error completely, e.g., alert((0.1*10 + 0.2*10) / 10); // 0.3, alert((0.28*100 + 0.14*100) / 100); // 0.4200000000000001.
+Can also multiply numbers to make them integers, do math, then divide back. Reduces but doesn't remove error completely,
+e.g., alert((0.1*10 + 0.2*10) / 10); // 0.3, alert((0.28*100 + 0.14*100) / 100); // 0.4200000000000001.
 
 If possible, avoid fractions by storing in smallest units. Round them when necessary.
 
 Large numbers may lose precision, e.g., alert(9999999999999999); // shows 10000000000000000.
 
-Two zeroes exist: 0 and -0, due to sign being a single bit. In most cases, they're treated as same. and 0 === -0 is true.
+Two zeroes exist: 0 and -0, due to sign being a single bit. In most cases, they're treated as same. and 0 === -0 is
+true.
+
+**isNaN and isFinite**
+
+isNaN(value) converts (Number.isNaN doesn't convert) its argument to a number and then tests it for being NaN.
+alert( isNaN(NaN) ); // true
+alert( isNaN("str") ); // true
+
+NaN cannot be compared with anything, including itself, e.g.,
+alert( NaN === NaN ); // false.
+alert( NaN == NaN ); // false.  (Number.isNaN is more strict)
+NaN works with Object.is(NaN, NaN) === true. Note that Object.is(0, -0) === false
+
+isFinite(value) converts (Number.isNan doesn't convert) its argument to a number and returns true if it’s a regular number, not NaN/Infinity/-Infinity
+
+isFinite("123") // true
+Number.isFinite("123") // false (Number.isFinite is more strict)
+
+Object.is
+It works with NaN: Object.is(NaN, NaN) === true, that’s a good thing.
+Values 0 and -0 are different: Object.is(0, -0) === false.
+In all other cases, Object.is(a, b) is the same as a === b.
+
+**parseInt and parseFloat**
+
+Numeric conversion using a plus + or Number() is strict. If a value is not exactly a number, it fails: alert( +"100px" ); // NaN.
+
+That's why parseInt and parseFloat are more flexible. They read a number from a string until they can't.
+
+```javascript
+alert( parseInt('100px') ); // 100
+alert( parseFloat('12.5em') ); // 12.5
+
+alert( parseInt('12.3') ); // 12, only the integer part is returned
+alert( parseFloat('12.3.4') ); // 12.3, the second point stops the reading
+alert( parseInt('a123') ); // NaN, the first symbol stops the process
+```
+
+parseInt(str, radix) parses the string str into an integer number of the numeral system with given radix (from 2 to 36).
+
+```javascript
+alert( parseInt('0xff', 16) ); // 255
+alert( parseInt('ff', 16) ); // 255, without 0x also works
+alert( parseInt('2n9c', 36) ); // 123456
+```
+
+Other Math functions
+
+```javascript
+alert(Math.random()); // 0.1234567894322 (Returns a random number from 0 to 1 (not including 1))
+alert(Math.max(3, 5, -10, 0, 1)); // 5
+alert(Math.min(1, 2)); // 1
+alert(Math.pow(2, 10)); // 2 in power 10 = 1024
+```
 
