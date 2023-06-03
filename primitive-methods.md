@@ -2,7 +2,7 @@ https://javascript.info/primitives-methods
 
 JS provides methods and properties that work with primitives (except null and undefined which are called most
 primitive). They are available temporarily as objects called "Object Wrapper", then disappear. String, Number, etc can
-have different methods and properties.
+have different methods and properties. The process of using "Object Wrapper" is known as "autoboxing" or "implicit wrapping".
 
 Constructors String/Number/Boolean are for internal use only. Using them for primitives is possible, but highly
 discouraged.

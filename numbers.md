@@ -2,7 +2,7 @@ https://javascript.info/number
 
 **Two types of nums**
 
-1. Regular numbers, stored in 64-bit format, at maximum of -(2^53-1) to 2^53-1. Also know as "double precision floating
+1. Regular numbers, stored in 64-bit format, at maximum of -(2^53-1) to 2^53-1. Also known as "double precision floating
    point numbers" or "doubles" for short.
    52 to store digits, 11 for decimal point, and 1 bit is for the sign.
 2. BigInt numbers are to represent integers of arbitrary length. A BigInt number is created by appending n to the end of
@@ -11,7 +11,7 @@ https://javascript.info/number
 **Ways to write a Number**
 
 Using Underscores: let billion = 1000000000; and let billion = 1_000_000_000; are the same. The second is easier to
-read. JS ignores the underscores.
+read. It's for  “syntactic sugar”. JS ignores the underscores.
 
 Using e sign:
 
@@ -20,7 +20,7 @@ let billion = 1e9;  // 1 billion, literally: 1 and 9 zeroes
 alert(7.3e9);  // 7.3 billions (same as 7300000000 or 7_300_000_000)
 ```
 
-In other words, e multiplies the number by 1 with the given zeroes count.
+In other words, e multiplies the number with the given zeroes count.
 
 ```javascript
 1e3 === 1 * 1000; // e3 means *1000
@@ -42,15 +42,15 @@ In other words, a negative number after "e" means a division by 1 with the given
 
 **Hex, Binary and Octal numbers**
 
-Hex
+Hex (base 16)
 alert( 0xff ); // 255
 alert( 0xFF ); // 255 (the same, case doesn't matter)
 0xff == 0xFF // true
 
-Binary
+Binary (Base 2)
 alert( 0b11111111 ); // 255
 
-Octal
+Octal (Base 8)
 alert( 0o377 ); // 255
 
 **toString(base)**
@@ -84,6 +84,7 @@ Math.floor: Rounds down (3.1 to 3, -1.1 to -2)
 Math.ceil: Rounds up (3.1 to 4, -1.1 to -1)
 Math.round: Rounds to nearest integer (3.1 to 3, 3.6 to 4; 3.5 to 4)
 Math.trunc: Truncates decimal without rounding (3.1 to 3, -1.1 to -1)
+
 Round to n-th digit:
 
 Multiply, round, divide:
@@ -91,7 +92,7 @@ Multiply, round, divide:
 1. Math.round(num * 100) / 100 for 2 decimal digits.
 2. toFixed(n): Rounds to n digits, returns string: (12.31).toFixed(1) for "12.3", (12.35).toFixed(1) for "12.4"
 3. toFixed appends zeroes if decimal part is shorter: num.toFixed(5) for "12.34000"
-4. Convert toFixed string result to number with unary plus or Number(): +num.toFixed(5)
+4. Convert toFixed string result to number with unary plus or Number() like +num.toFixed(5)
 
 **Imprecise calculations**
 
@@ -103,7 +104,7 @@ Large numbers may overflow to Infinity, e.g., alert(1e500); // Infinity.
 0.1+0.2); // 0.30000000000000004.
 
 Fractions like 0.1, 0.2 are unending in binary. No way to store exactly 0.1 or 0.2 in binary, similar to storing 1/3 in
-decimal.
+decimal which becomes endless 0.3333333333333333...
 
 IEEE-754 rounds to nearest number, causing "precision loss", e.g., alert(0.1.toFixed(20)); // 0.10000000000000000555.
 
@@ -136,6 +137,16 @@ isFinite(value) converts (Number.isNan doesn't convert) its argument to a number
 
 isFinite("123") // true
 Number.isFinite("123") // false (Number.isFinite is more strict)
+
+isFinite and isNaN mostly give opposite bollen values, e.g., 
+alert( isNaN("123") ); // false, 
+alert( isFinite("123")
+); // true. 
+Except Infinity/-Infinity, e.g., 
+alert( isNaN(Infinity) ); // false, 
+alert( isFinite(Infinity) ); // false.
+
+
 
 Object.is
 It works with NaN: Object.is(NaN, NaN) === true, that’s a good thing.
