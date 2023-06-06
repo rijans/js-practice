@@ -1,5 +1,8 @@
 https://javascript.info/string
 
+**Coercion**
+Whenever you try to access a property of a string str, JavaScript coerces the string value to an object, by new String(str). Same happens for other primitives except null and undefined.This object is called a wrapper object.
+
 **String and Backticks**
 JavaScript uses UTF-16 (specifically UCS-2 encoding) as its internal representation for strings. This means that each character in a JavaScript string is represented by one or two 16-bit code units. Each character has a corresponding numeric code.
 
@@ -110,5 +113,14 @@ Returns a positive number if str is greater than str2.
 Returns 0 if they are equivalent.
 For instance:
 alert( 'Österreich'.localeCompare('Zealand') ); // -1
+
+**Changing the case**
+
+str.toUpperCase() / str.toLowerCase() returns the case-changed string.
+
+**Other Methods**
+str.trim() – removes (“trims”) spaces from the beginning and end of the string.
+str.repeat(n) – repeats the string n times.
+
 
 
