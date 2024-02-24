@@ -60,3 +60,5 @@ for (let value of set) alert(value);
 set.forEach((value, valueAgain, set) => {
 alert(value);
 });
+
+**Map and Set are iterables.
